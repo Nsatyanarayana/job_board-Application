@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Dashboard</title>
+    <link rel="stylesheet" href="../css/emp.css">
+    <script src="js/employer.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container my-4">
+        <h1 class="mb-4 text-center">Employer Dashboard</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="post-job.html" class="btn btn-primary">Post a Job</a>
+        </div>
+        <div class="row" id="jobDes"></div>
+    </div>
+    <div class="modal fade" id="jobDetailsModal" tabindex="-1" aria-labelledby="jobDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="jobDetailsModalLabel">Job Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 id="modalJobTitle"></h4>
+                    <p id="modalJobDescription"></p>
+                    <p><strong>Location:</strong> <span id="modalJobLocation"></span></p>
+                    <p><strong>Salary:</strong> <span id="modalJobSalary"></span></p>
+                    <p><strong>Requirements:</strong> <span id="modalJobRequirements"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const jobDesContainer = document.getElementById("jobDes");
+
+        const getPostedJobs = async () => {
+            const jobRes = await fetch("http://127.0.0.1:8800/employer/jobs");
+            const data = await jobRes.json();
+            console.log(data);
+            jobList(data);
+        };
+
+        const jobList = (data) => {
+            data.forEach(element => {
+                const col = document.createElement("div");
+                col.className = "col-md-4 mb-4";
+
+                const card = document.createElement("div");
+                card.className = "card h-100 shadow-sm";
+
+                const cardBody = document.createElement("div");
+                cardBody.className = "card-body d-flex flex-column";
+
+                const jobTitle = document.createElement("h5");
+                jobTitle.className = "card-title";
+                jobTitle.textContent = element.title || "Job Title";
+
+                const jobDescription = document.createElement("p");
+                jobDescription.className = "card-text flex-grow-1";
+                jobDescription.textContent = element.description || "Job Description";
+
+                const jobLocation = document.createElement("p");
+                jobLocation.className = "card-text";
+                
+                jobLocation.innerHTML = `<small class="text-muted">Location: ${element.location || "N/A"}</small>`;
+
+                const applyButton = document.createElement("a");
+                applyButton.href = "#";
+                applyButton.className = "btn btn-primary mt-3";
+                applyButton.textContent = "View Details";
+
+                //  "View Details" button
+                applyButton.addEventListener("click", () => {
+                    // Populate the modal with job details
+                    document.getElementById("modalJobTitle").textContent = element.title || "Job Title";
+                    document.getElementById("modalJobDescription").textContent = element.description || "Job Description";
+                    document.getElementById("modalJobLocation").textContent = element.location || "N/A";
+                    document.getElementById("modalJobSalary").textContent = element.salary || "N/A";
+                    document.getElementById("modalJobRequirements").textContent = element.requirements || "N/A";
+
+                    // Show the modal
+                    const jobDetailsModal = new bootstrap.Modal(document.getElementById("jobDetailsModal"));
+                    jobDetailsModal.show();
+                });
+
+                cardBody.append(jobTitle, jobDescription, jobLocation, applyButton);
+                card.append(cardBody);
+                col.append(card);
+                jobDesContainer.append(col);
+            });
+        };
+
+        addEventListener("DOMContentLoaded", getPostedJobs);
+        //get user details from storege and asign to it a variable
+        // chage backed functionality , job_id store into the users as a array nned to change api call
+        // wright a api call , input(job_id from user , search jobs, return each object and render it )
+    </script>
+</body>
+</html>

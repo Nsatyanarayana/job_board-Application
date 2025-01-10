@@ -1,0 +1,86 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Jobs</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="/frontend/js/job-seeker.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">Search Jobs</h1>
+                <div class="mb-3">
+                    <input 
+                        type="text" 
+                        id="search-keyword" 
+                        class="form-control" 
+                        placeholder="Search by job title or skills"
+                        aria-label="Search Input">
+                </div>
+                <div class="d-grid gap-2">
+                    <a href="/frontend/job-seeker/search-jobs.html" class="btn btn-primary" id="search-button">Search</a>
+                </div>
+                <div id="job-list" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .job {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .job h2 {
+            margin-top: 0;
+        }
+        .job p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Job Search</h1>
+        <form id="searchForm" class="mb-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" id="skill" class="form-control" placeholder="Skill (e.g., JavaScript)">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" id="location" class="form-control" placeholder="Location (e.g., New York)">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" id="title" class="form-control" placeholder="Job Title (e.g., Developer)">
+                </div>
+            </div>
+            <div class="d-grid gap-2 mt-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <div id="results">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
